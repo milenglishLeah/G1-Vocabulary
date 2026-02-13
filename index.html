@@ -1,0 +1,288 @@
+import React, { useState } from 'react';
+import { RotateCcw, ChevronLeft, ChevronRight, BookOpen, Layers, Repeat, Zap } from 'lucide-react';
+
+const vocabData = [
+  {
+    word: "Active",
+    pos: "Adjective",
+    meaning: "Taking action; full of movement; busy and energetic.",
+    family: "Action, Activity, Activate",
+    synonyms: "Lively, Busy, Energetic",
+    antonyms: "Slow, Lazy, Passive",
+    examples: [
+      "The active puppy ran circles around the park for an hour.",
+      "She stays active by swimming and riding her bike every morning."
+    ],
+    color: "bg-blue-500"
+  },
+  {
+    word: "Bargain",
+    pos: "Noun / Verb",
+    meaning: "An agreement between two people; something bought at a cheap price.",
+    family: "Bargaining",
+    synonyms: "Steal, Deal, Haggle",
+    antonyms: "Overpriced, Rip-off",
+    examples: [
+      "I found a real bargain at the garage sale—a bike for only five dollars!",
+      "He tried to bargain with the vendor to get a better price for the rug."
+    ],
+    color: "bg-emerald-500"
+  },
+  {
+    word: "Gasp",
+    pos: "Verb / Noun",
+    meaning: "To breathe in quickly from shock or fear; a sudden short breath.",
+    family: "Gasping",
+    synonyms: "Pant, Gulp",
+    antonyms: "Exhale, Breathe calmly",
+    examples: [
+      "The crowd let out a gasp when the magician disappeared.",
+      "She had to gasp for air after running up the steep hill."
+    ],
+    color: "bg-purple-500"
+  },
+  {
+    word: "Loyal",
+    pos: "Adjective",
+    meaning: "Faithful to one's country, a person, or an idea.",
+    family: "Loyalty, Loyally",
+    synonyms: "Faithful, True, Devoted",
+    antonyms: "Unfaithful, Treacherous",
+    examples: [
+      "A loyal dog will wait for its owner to come home all day.",
+      "He remained a loyal fan of the team even when they lost every game."
+    ],
+    color: "bg-indigo-500"
+  },
+  {
+    word: "Resource",
+    pos: "Noun",
+    meaning: "A source of useful supplies, materials, or information.",
+    family: "Resourceful, Resourced",
+    synonyms: "Supply, Asset, Reserve",
+    antonyms: "Lack, Shortage",
+    examples: [
+      "The library is a great resource for students writing research papers.",
+      "Water is a natural resource that we must use very carefully."
+    ],
+    color: "bg-cyan-600"
+  },
+  {
+    word: "Sensitive",
+    pos: "Adjective",
+    meaning: "Reacting quickly to something; easily hurt or bothered.",
+    family: "Sense, Sensitivity, Sensitively",
+    synonyms: "Touchy, Delicate",
+    antonyms: "Insensitive, Unfeeling",
+    examples: [
+      "The baby has sensitive skin that gets red in the sunlight.",
+      "He is very sensitive to loud noises and covers his ears."
+    ],
+    color: "bg-rose-500"
+  },
+  {
+    word: "Struggle",
+    pos: "Noun / Verb",
+    meaning: "An enormous effort or a great battle; to fight hard or try very hard.",
+    family: "Struggling",
+    synonyms: "Strive, Wrestle, Fight",
+    antonyms: "Ease, Success",
+    examples: [
+      "It was a struggle to carry the heavy couch up three flights of stairs.",
+      "Small plants struggle to grow in the dry, sandy soil."
+    ],
+    color: "bg-amber-600"
+  },
+  {
+    word: "Value",
+    pos: "Noun / Verb",
+    meaning: "The worth or importance of something; to think highly of something.",
+    family: "Valuable, Valuation, Valued",
+    synonyms: "Importance, Worth, Treasure",
+    antonyms: "Scorn, Reject, Worthlessness",
+    examples: [
+      "The value of the gold ring was much higher than I expected.",
+      "I value your advice because you are always so honest."
+    ],
+    color: "bg-teal-500"
+  },
+  {
+    word: "Vary",
+    pos: "Verb",
+    meaning: "To do in a new way; to make different or change.",
+    family: "Variety, Various, Variation",
+    synonyms: "Alter, Change, Diversify",
+    antonyms: "Stay, Remain, Continue",
+    examples: [
+      "The restaurant menu will vary depending on what vegetables are in season.",
+      "Try to vary your exercise routine so you don't get bored."
+    ],
+    color: "bg-orange-500"
+  },
+  {
+    word: "Wander",
+    pos: "Verb",
+    meaning: "To move around without a plan or goal; to get lost.",
+    family: "Wandering, Wanderer",
+    synonyms: "Roam, Stray, Ramble",
+    antonyms: "Stay, Settle",
+    examples: [
+      "Don't wander away from the group during the field trip.",
+      "We spent the afternoon watching the clouds wander across the sky."
+    ],
+    color: "bg-emerald-600"
+  }
+];
+
+export default function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const nextCard = () => {
+    setIsFlipped(false);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % vocabData.length);
+    }, 150);
+  };
+
+  const prevCard = () => {
+    setIsFlipped(false);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + vocabData.length) % vocabData.length);
+    }, 150);
+  };
+
+  const current = vocabData[currentIndex];
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4 font-sans">
+      <div className="max-w-md w-full text-center mb-8">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">Unit 3 Vocabulary</h1>
+        <p className="text-slate-500">Click the card to flip and see details</p>
+        <div className="flex justify-center gap-2 mt-4">
+          <div className="bg-white px-4 py-1 rounded-full shadow-sm text-sm font-medium text-slate-600 border border-slate-200">
+            Card {currentIndex + 1} of {vocabData.length}
+          </div>
+        </div>
+      </div>
+
+      {/* Flashcard Container */}
+      <div 
+        className="relative w-full max-w-sm h-[500px] perspective-1000 cursor-pointer group"
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        <div className={`relative w-full h-full transition-transform duration-500 transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
+          
+          {/* Front of Card */}
+          <div className={`absolute inset-0 backface-hidden bg-white rounded-3xl shadow-xl border-b-8 border-slate-200 flex flex-col items-center justify-center p-8 ${!isFlipped ? 'z-10' : 'z-0'}`}>
+            <div className={`w-20 h-20 rounded-2xl ${current.color} flex items-center justify-center mb-6 shadow-lg`}>
+              <Zap className="text-white w-10 h-10" />
+            </div>
+            <h2 className="text-5xl font-black text-slate-800 tracking-tight mb-2">
+              {current.word}
+            </h2>
+            <span className="px-4 py-1 bg-slate-100 text-slate-500 rounded-full text-sm font-bold uppercase tracking-widest">
+              {current.pos}
+            </span>
+            <div className="absolute bottom-8 text-slate-300 animate-pulse flex flex-col items-center">
+              <Repeat size={20} className="mb-1" />
+              <span className="text-xs font-bold">FLIP</span>
+            </div>
+          </div>
+
+          {/* Back of Card */}
+          <div className={`absolute inset-0 backface-hidden bg-white rounded-3xl shadow-xl border-b-8 border-slate-200 p-6 rotate-y-180 overflow-y-auto ${isFlipped ? 'z-10' : 'z-0'}`}>
+            <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+              <div className={`w-8 h-8 rounded-lg ${current.color} flex items-center justify-center`}>
+                <BookOpen className="text-white w-4 h-4" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-800">{current.word}</h3>
+              <span className="ml-auto text-xs font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">{current.pos}</span>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-tighter mb-1">Meaning</p>
+                <p className="text-slate-700 leading-snug">{current.meaning}</p>
+              </div>
+
+              {current.family && (
+                <div>
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-tighter mb-1 flex items-center gap-1">
+                    <Layers size={14} /> Word Family
+                  </p>
+                  <p className="text-slate-600 text-sm font-medium">{current.family}</p>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                  <p className="text-[10px] font-black text-emerald-600 uppercase mb-1">Synonyms</p>
+                  <p className="text-xs text-emerald-800 font-bold">{current.synonyms || "None"}</p>
+                </div>
+                <div className="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                  <p className="text-[10px] font-black text-rose-600 uppercase mb-1">Antonyms</p>
+                  <p className="text-xs text-rose-800 font-bold">{current.antonyms || "None"}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-tighter mb-2">Example Sentences</p>
+                <div className="space-y-2">
+                  {current.examples.map((ex, i) => (
+                    <div key={i} className="flex gap-2">
+                      <div className="min-w-[4px] h-auto rounded bg-slate-200" />
+                      <p className="text-xs text-slate-600 italic">"{ex}"</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center gap-6 mt-10">
+        <button 
+          onClick={(e) => { e.stopPropagation(); prevCard(); }}
+          className="p-4 bg-white rounded-full shadow-md hover:shadow-lg text-slate-600 hover:text-blue-600 transition-all border border-slate-100"
+        >
+          <ChevronLeft size={28} />
+        </button>
+        
+        <button 
+          onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
+          className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-md text-slate-600 font-bold hover:bg-slate-50 transition-all border border-slate-100"
+        >
+          <RotateCcw size={18} />
+          Reset
+        </button>
+
+        <button 
+          onClick={(e) => { e.stopPropagation(); nextCard(); }}
+          className="p-4 bg-white rounded-full shadow-md hover:shadow-lg text-slate-600 hover:text-blue-600 transition-all border border-slate-100"
+        >
+          <ChevronRight size={28} />
+        </button>
+      </div>
+
+      <style>
+        {`
+          .perspective-1000 {
+            perspective: 1000px;
+          }
+          .transform-style-3d {
+            transform-style: preserve-3d;
+          }
+          .backface-hidden {
+            backface-visibility: hidden;
+          }
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
+        `}
+      </style>
+    </div>
+  );
+}
